@@ -23,7 +23,7 @@ class ChaCha20
 
     public function __construct($key, $counter, $nonce)
     {
-        $this->key = str_split($key);
+        $this->key = $key;
         $this->counter = $counter;
         $this->nonce = $nonce;
     }
@@ -221,7 +221,7 @@ class ChaCha20
     {
         $Text = str_split($Text);
 
-        foreach ($Text as $Key=>$char)
+        foreach ($Text as $Key => $char)
         {
             $Text[$Key] = ord($char);
         }
@@ -259,7 +259,7 @@ class ChaCha20
         }
 
         $this->Text = $Text;
-        print_r($this->Text);
+        //print_r($this->Text);
         return $this->ToString();
     }
 
@@ -275,27 +275,3 @@ class ChaCha20
         return $str;
     }
 }
-
-
-
-$key = 'ljuOjlADkFAjTppDsK3VzaVGORwv6tun';
-$nonce = array( 0, 0, 0 );
-$cc = new ChaCha20($key,1,$nonce);
-
-$cookie = 'ttt';
-$end = $cc->ChaChaEncrypt($cookie,3);
-//echo $end;
-
-$cc->ResetCount(1);
-$ded = $cc->ChaChaEncrypt($end,strlen($end));
-//echo $ded;
-/*
-$nonce = array( 1234, 2222, 3333 );
-
-
-$endStr = $cc->ChaChaEncrypt("TestChaCha20",12);
-
-$cc->ResetCount(1);
-$DedStr = $cc->ChaChaEncrypt($endStr,12);
-
-echo $DedStr;*/

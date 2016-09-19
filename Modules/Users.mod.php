@@ -16,14 +16,16 @@ class Users
     private $Db;
     private $ChaCha20;
 
-    private $key = 'ljuOjlADkFAjTppDsK3VzaVGORwv6tun';
+    private $key = "ljuOjlADkFAjTppDsK3VzaVGORwv6tun";
     private $nonce = array( 0, 0, 0 );
+
     private $salt = 'd6x()!-F';
 
     public function __construct()
     {
         $this->Db = new Mysql();
-        $this->ChaCha20 = new ChaCha20($this->key,1,$this->nonce);
+        $this->key = str_split($this->key);
+        $this->ChaCha20 = new ChaCha20($this->key, 1, $this->nonce);
     }
 
     public function Register($Username, $Pwd)
@@ -48,50 +50,34 @@ class Users
 
     public function IsLogin()
     {
-        if(isset($_COOKIE['LOGIN']))
+        if (isset($_COOKIE['LOGIN']))
         {
             $LoginCookie = $_COOKIE['LOGIN'];
             $LoginCookie = base64_decode($LoginCookie);
-            //print_r($LoginCookie);
-            //try decrypt
-            $LoginCookieInfo = $this->ChaCha20->ChaChaEncrypt($LoginCookie,strlen($LoginCookie));
-            //print_r($LoginCookieInfo);
-            $LoginCookieInfo = json_decode($LoginCookieInfo,true);
+            $LoginCookieInfo = $this->ChaCha20->ChaChaEncrypt($LoginCookie, strlen($LoginCookie));
+            $LoginCookieInfo = json_decode($LoginCookieInfo, true);
 
-
-            if($LoginCookieInfo == null)
+            if ($LoginCookieInfo == null)
                 return false;
             else
             {
                 $Username = $LoginCookieInfo['user'];
                 $Pwd = $this->GenPwdHash($LoginCookieInfo['pwd']);
-                if($this->HasUserAndPwd($Username,$Pwd))
+                if ($this->HasUserAndPwd($Username, $Pwd))
                     return true;
                 else return false;
             }
         }
     }
 
-    public function GenCookie($Username,$Pwd)
+    public function GenCookie($Username, $Pwd)
     {
+        //use chacha20 to encrypt cookie
         $cookie = array();
         $cookie['user'] = $Username;
         $cookie['pwd'] = $Pwd;
-
-        //$cookieText = json_encode($cookie);
-        $cookieText = 'test';
-
-        $cookie = 'ttt';
-        $end = $this->ChaCha20->ChaChaEncrypt($cookie,1);
-
-        $this->ChaCha20->ResetCount(1);
-        $ded = $this->ChaCha20->ChaChaEncrypt($end,strlen($end));
-        echo $ded;
-
-        //echo $cookieText;
-        //echo base64_encode($this->ChaCha20->ChaChaEncrypt('1',1));
-        //return 'sss';
-        return base64_encode($this->ChaCha20->ChaChaEncrypt($cookieText,strlen($cookieText)));
+        $cookieText = json_encode($cookie);
+        return base64_encode($this->ChaCha20->ChaChaEncrypt($cookieText, strlen($cookieText)));
     }
 
     private function GenPwdHash($Pwd)
