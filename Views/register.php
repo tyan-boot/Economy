@@ -23,7 +23,7 @@
                     <div class="small-12 columns">
                         <div class="input-group">
                             <span class="input-group-label">Username</span>
-                            <input type="text" class="input-group-field" id="user" value="">
+                            <input type="text" class="input-group-field" id="user" value="" title="user">
                         </div>
                     </div>
                     <div class="small-12 columns">
@@ -48,7 +48,7 @@
                 var Pwd = $('#pwd').val();
 
                 $.ajax({
-                    url:'http://<?=\Config\Config::$SiteUrl?>/register/register',
+                    url:'http://<?=\Config\Config::$SiteUrl?>/Register/Register',
                     data:{
                         Username:Username,
                         Password:Pwd
