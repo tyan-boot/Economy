@@ -10,6 +10,6 @@ namespace Config;
 
 class Config
 {
-    public static $SiteUrl = 'eco.boot.pw';
+    public static $SiteUrl = 'boot-economy.carp.mopaasapp.com';
     public static $UseHttps = false;
 }
