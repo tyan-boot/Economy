@@ -67,7 +67,7 @@ class Users
                     return true;
                 else return false;
             }
-        }
+        }else return false;
     }
 
     public function GenCookie($Username, $Pwd)
