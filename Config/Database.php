@@ -13,11 +13,11 @@ class Database
 {
     public static $DB_TYPE = 'mysql';
 
-    public static $DB_HOST = '192.168.1.11';
+    public static $DB_HOST = '127.0.0.1';
 
-    public static $DB_USER = '9dc95e37-0212';
+    public static $DB_USER = 'root';
 
-    public static $DB_PWD = 'f44f863a-8400';
+    public static $DB_PWD = 'root';
 
-    public static $DB = 'de8ba7ef2aeba44c3b77d1196c1916bd5';
+    public static $DB = 'economy';
 }
