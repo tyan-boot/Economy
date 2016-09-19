@@ -58,7 +58,7 @@
                             <?php else: ?><span class="money-add stat">+$<?= $r['number'] ?></span>
                             <?php endif; ?>
                             <span class="money-time small"><?= date("Y-m-d H:i:s", $r['time']); ?></span>
-                            <input type="number" class="is-hidden" id="uid" value="<?= $r['id'] ?>">
+                            <input type="number" class="is-hidden" id="record-id" value="<?= $r['id'] ?>">
                         </div>
 
                     <?php endforeach; ?>
@@ -212,8 +212,8 @@
                 })
             });
 
-            $('.money-details').click(function (event) {
-                console.log($(this).find('#uid').val());
+            $('.money-box').click(function (event) {
+                console.log($(this).find('#record-id').val());
                 //console.log($(event.target).children('#uid').val());
             });
         </script>
