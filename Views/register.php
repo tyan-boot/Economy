@@ -18,7 +18,7 @@
                 <div class="row">
 
                     <div class="small-12 columns">
-                        <h3 class="text-center login-text">Sign in</h3>
+                        <h3 class="text-center login-text">Sign up</h3>
                     </div>
                     <div class="small-12 columns">
                         <div class="input-group">
@@ -34,7 +34,8 @@
                     </div>
 
                     <div class="small-6 small-offset-3 columns">
-                        <button id='login' type="button" class="button expanded">Join!</button>
+                        <button id='reg' type="button" class="button expanded">Join!</button>
+                        <button id='login' type="button" class="button expanded">Log in!</button>
                     </div>
                 </div>
             </div>
@@ -42,29 +43,33 @@
         <?php include 'footer.php'; ?>
 
         <script>
-            $('#login').click(function () {
+            $('#reg').click(function () {
 
                 var Username = $('#user').val();
                 var Pwd = $('#pwd').val();
 
                 $.ajax({
-                    url:'http://<?=\Config\Config::$SiteUrl?>/Register/Register',
-                    data:{
-                        Username:Username,
-                        Password:Pwd
+                    url: 'http://<?=\Config\Config::$SiteUrl?>/Register/Register',
+                    data: {
+                        Username: Username,
+                        Password: Pwd
                     },
-                    type:'POST',
-                    dataType:'json',
-                    success:function (data) {
-                        if(data.err == 0)
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.err == 0) {
                             alert(data.msg);
+                            window.location.href = '/Login';
+                        }
                         else alert(data.msg);
                     },
-                    error:function (data) {
+                    error: function (data) {
                         alert(data);
                     }
                 });
             });
+
+            $('#login').click(function (){window.location.href='/Login';});
         </script>
     </body>
 </html>

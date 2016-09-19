@@ -34,7 +34,7 @@ class Login extends Controller
         if($this->User->Login($User,$Pwd))
         {
             //set cookie
-            setcookie('LOGIN',$this->User->GenCookie($User,$Pwd),time()+3600);
+            setcookie('LOGIN',$this->User->GenCookie($User,$Pwd),time()+3600,'/');
             $msg['err'] = 0;
             $msg['msg'] = 'Login Success';
             echo json_encode($msg);

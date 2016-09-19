@@ -11,6 +11,7 @@ namespace Core\Controller;
 
 use Core\Loader;
 use Core\Utils\Input;
+use Config\Config;
 
 class Controller
 {
@@ -27,5 +28,21 @@ class Controller
     {
         //load view
         $this->Loader->View($View, $Vars);
+    }
+
+    protected function ReDirect($Url, $OtherSite = false)
+    {
+        if(!$OtherSite)
+        {
+            $NewUrl = '';
+            if(Config::$UseHttps)
+                $NewUrl = 'https://';
+            else $NewUrl = 'http://';
+
+            $NewUrl = $NewUrl.Config::$SiteUrl.'/'.$Url;
+
+            header("Location: ".$NewUrl);
+        }else
+            header("Location: ".$Url);
     }
 }

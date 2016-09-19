@@ -35,6 +35,7 @@
 
                     <div class="small-6 small-offset-3 columns">
                         <button id='login' type="button" class="button expanded">Login</button>
+                        <button id='reg' type="button" class="button expanded">Sign up</button>
                     </div>
                 </div>
             </div>
@@ -48,24 +49,28 @@
                 var Pwd = $('#pwd').val();
 
                 $.ajax({
-                    url:'http://<?=\Config\Config::$SiteUrl?>/Login/Login',
-                    data:{
-                        Username:Username,
-                        Password:Pwd
+                    url: 'http://<?=\Config\Config::$SiteUrl?>/Login/Login',
+                    data: {
+                        Username: Username,
+                        Password: Pwd
                     },
-                    type:'POST',
-                    dataType:'json',
-                    success:function (data) {
-                        if(data.err == 0)
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.err == 0) {
                             alert(data.msg);
+                            window.location.href = '/Index';
+                        }
                         else alert(data.msg);
                     },
-                    error:function (data) {
+                    error: function (data) {
                         alert(data);
                     }
                 });
                 //alert('User is ' + Username + '  Pwd is ' + Pwd);
             });
+
+            $('#reg').click(function (){window.location.href='/Register';});
         </script>
     </body>
 </html>
