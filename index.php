@@ -10,6 +10,9 @@
  * Load Autoloader
  */
 
+$starttime = explode(' ',microtime());
+
+
 define('ROOT_DIR', __DIR__.'/');
 require_once 'Core/Loader.php';
 $Loader = new \Core\Loader();

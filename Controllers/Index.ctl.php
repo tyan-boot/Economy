@@ -19,17 +19,54 @@ class Index extends Controller
     {
         parent::__construct();
         $this->User = new Users();
+        date_default_timezone_set('PRC');
     }
 
     public function index($var1 = null)
     {
-        if(!$this->User->IsLogin())
+        if (!$this->User->IsLogin())
         {
-            echo 'No login';
-            //$this->ReDirect('Login/index');
+            $this->ReDirect('Login/index');
         }
-        $vars = array( 'title' => 'Index', 'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/' );
+        $id = $this->User->GetLoggedUserId();
+        $data = $this->User->QueryRecordByUserId($id);
 
+        $Income = $this->User->CountTotalIn($id);
+        $Outcome = $this->User->CountTotalOut($id);
+        $Balance = $Income -$Outcome;
+
+        global $starttime;
+
+        $endtime = explode(' ',microtime());
+        $thistime = $endtime[0]+$endtime[1]-($starttime[0]+$starttime[1]);
+        $thistime = round($thistime,5);
+
+        $vars = array(  'title' => 'Index',
+                        'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/',
+                        'Records'=>$data,
+                        'Income'=>$Income,
+                        'Outcome'=>$Outcome,
+                        'Balance'=>$Balance
+            );
+        echo 'Run time  '.$thistime;
         $this->LoadView('index', $vars);
+    }
+
+    public function AddRecord()
+    {
+        $data = json_decode($GLOBALS['HTTP_RAW_POST_DATA']);
+        if ($this->User->IsLogin())
+        {
+            $this->User->AddRecord($this->User->GetLoggedUserId(), $data->type, $data->number, $data->title, $data->details, $data->time);
+            $msg['err'] = 0;
+            $msg['msg'] = 'Success';
+            echo json_encode($msg);
+        } else
+        {
+            $msg['err'] = 1;
+            $msg['msg'] = 'No Login';
+            echo json_encode($msg);
+        }
+        //$data = $this->Input->Post('')
     }
 }

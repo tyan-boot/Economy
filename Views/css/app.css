@@ -52,43 +52,63 @@ body {
     box-shadow: 0em 0.5em 2em #aaa;
 }
 
+.money-overview {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.money-in {
+    height: 7em;
+    box-shadow: 0em 0.5em 2em #aaa;
+}
+
+.money-out {
+    height: 7em;
+    box-shadow: 0em 0.5em 2em #aaa;
+}
+
+.money-balance {
+    height: 7em;
+    box-shadow: 0em 0.5em 2em #aaa;
+}
+
 .money-title {
     position: absolute;
-    top: 1.0em;
-    left: 1.0em;
+    top: 1.5rem;
+    left: 1.5rem;
     font-size: 150% !important;
     font-weight: bold;
 }
 
 .money-content {
     position: absolute;
-    top: 4em;
-    left: 1.5em;
+    top: 4rem;
+    left: 1.5rem;
     color: #888;
 }
 
 .money-time {
     position: absolute;
-    right: 2em;
-    bottom: 1em;
+    right: 2rem;
+    bottom: 1rem;
     font-weight: 600;
     color: #757575;
 }
 
 .money-details {
-    padding-top: 3em !important;
+    padding-top: 1.5rem !important;
 }
 
 .floatbutton {
     position: fixed;
-    right: 3em;
-    bottom: 3em;
+    right: 3rem;
+    bottom: 3rem;
 }
 
 .add-button {
     background-color: coral !important;
     border-radius: 100%;
-    box-shadow: 0.5em 0.5em 2em #aaa;
+    box-shadow: 0.5rem 0.5rem 2rem #aaa;
 }
 
 .add-button:hover {
@@ -99,19 +119,41 @@ body {
 }
 
 .AddForm > h1 {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 }
 
 #AddItem > .AddForm {
-    padding-top: 1.0em;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
+    padding-top: 1.0rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
-.AddForm > .switch > .switch-paddle {
+.AddForm > .row > .columns > .switch > .switch-paddle {
     width: 8rem !important;
 }
 
-.AddForm > .switch > input:checked ~ .switch-paddle::after {
+.AddForm > .row > .columns > .switch > input:checked ~ .switch-paddle::after {
     left: 5.75rem !important;
+}
+
+.money-overview > .row > .money-in > p {
+    font-size: 150% !important;
+    color: #c60f13;
+    text-align: center;
+}
+
+.money-overview > .row > .money-out > p {
+    font-size: 150% !important;
+    color: #5da423;
+    text-align: center;
+}
+
+.money-overview > .row > .money-balance > p {
+    font-size: 150% !important;
+    color: #5da423;
+    text-align: center;
+}
+
+.InOutText {
+    margin-top: -0.5em;
 }

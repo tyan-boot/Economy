@@ -54,6 +54,7 @@ class Users
         {
             $LoginCookie = $_COOKIE['LOGIN'];
             $LoginCookie = base64_decode($LoginCookie);
+            $this->ChaCha20->ResetCount(1);
             $LoginCookieInfo = $this->ChaCha20->ChaChaEncrypt($LoginCookie, strlen($LoginCookie));
             $LoginCookieInfo = json_decode($LoginCookieInfo, true);
 
@@ -67,7 +68,32 @@ class Users
                     return true;
                 else return false;
             }
-        }else return false;
+        } else return false;
+    }
+
+    public function GetLoggedUserId()
+    {
+        if (!$this->IsLogin())
+        {
+            return null;
+        }
+        $LoginCookie = $_COOKIE['LOGIN'];
+        $LoginCookie = base64_decode($LoginCookie);
+        $this->ChaCha20->ResetCount(1);
+        $LoginCookieInfo = $this->ChaCha20->ChaChaEncrypt($LoginCookie, strlen($LoginCookie));
+        $LoginCookieInfo = json_decode($LoginCookieInfo, true);
+        $Username = $LoginCookieInfo['user'];
+
+        return $this->FindUserIdByName($Username);
+    }
+
+    private function FindUserIdByName($name)
+    {
+        $r = $this->Db->select('user', '*', [ 'user' => $name ]);
+        if ($r != null)
+        {
+            return $r[0]['uid'];
+        } else return null;
     }
 
     public function GenCookie($Username, $Pwd)
@@ -110,4 +136,67 @@ class Users
         return $this->Db->insert('user', [ 'user' => $Username, 'pwd' => $Pwd ]);
     }
 
+
+    /**
+     * @param $type
+     * @param $number
+     * @param $details
+     * @param $time
+     * @return array|mixed
+     */
+    public function AddRecord($userid, $type, $number, $title, $details, $time)
+    {
+        return $this->Db->insert('money', [
+            'type' => $type,
+            'number' => $number,
+            'time' => $time,
+            'userid' => $userid,
+            'title' => $title,
+            'details' => $details
+        ]);
+    }
+
+    public function QueryRecordByUserId($id)
+    {
+        return $this->Db->select('money', '*', [ 'userid' => $id, 'ORDER' => [ 'time' => 'DESC' ] ]);
+    }
+
+    public function CountMoney($uid)
+    {
+        return $this->CountTotalIn($uid) - $this->CountTotalOut($uid);
+    }
+
+    public function CountTotalOut($uid)
+    {
+        $r = $this->Db->select('money', [ 'userid', 'type', 'number' ], [ 'userid' => $uid ]);
+        if($r != null)
+        {
+            $TotalOut = 0;
+
+            foreach($r as $eachmoney)
+            {
+                if($eachmoney['type'] == 1)
+                    $TotalOut += $eachmoney['number'];
+            }
+
+            return $TotalOut;
+        }else return null;
+
+    }
+
+    public function CountTotalIn($uid)
+    {
+        $r = $this->Db->select('money', [ 'userid', 'type', 'number' ], [ 'userid' => $uid ]);
+        if($r != null)
+        {
+            $TotalOut = 0;
+
+            foreach($r as $eachmoney)
+            {
+                if($eachmoney['type'] == 2)
+                    $TotalOut += $eachmoney['number'];
+            }
+            return $TotalOut;
+        }else return null;
+    }
 }

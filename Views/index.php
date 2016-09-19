@@ -21,26 +21,47 @@
         <div class="row">
             <div class="small-12 medium-10 medium-offset-1">
 
-                <div class="money-details">
-                    <div class="callout money-box">
-                        <span class="money-title">SFW</span>
-                        <span class="money-content">Buy 4 sfw books</span>
-                        <span class="money-subtract stat">-$100</span>
-                        <span class="money-time small">2016-09-18</span>
+                <div class="money-overview column">
+                    <div class="row">
+                        <div class="small-4 columns money-in callout">
+                            <p>
+                                $<?= $Income ?>
+                            </p>
+                            <p class="InOutText">Income</p>
+                        </div>
+
+                        <div class="small-4 columns money-balance callout">
+                            <p>
+                                $<?= $Balance ?>
+                            </p>
+                            <p class="InOutText">Balance</p>
+                        </div>
+
+                        <div class="small-4 columns money-out callout">
+                            <p>
+                                $<?= $Outcome ?>
+                            </p>
+                            <p class="InOutText">Expenses</p>
+                        </div>
                     </div>
 
-                    <div class="callout money-box">
-                        <span class="money-title">Add</span>
-                        <span class="money-content">Arathi gave $9999</span>
-                        <span class="money-add stat">+$9999</span>
-                        <span class="money-time small">2016-09-18</span>
-                    </div>
-                    <div class="callout money-box">
-                        <span class="money-title">Add</span>
-                        <span class="money-content">Arathi gave $9999</span>
-                        <span class="money-add stat">+$9999</span>
-                        <span class="money-time small">2016-09-18</span>
-                    </div>
+                </div>
+
+                <div class="money-details">
+                    <?php foreach ($Records as $key => $r): ?>
+
+                        <div class="callout money-box">
+                            <span class="money-title"><?= $r['title'] ?></span>
+                            <span class="money-content"><?= $r['details'] ?></span>
+                            <?php if ($r['type'] == 1): ?>
+                                <span class="money-subtract stat">-$<?= $r['number'] ?></span>
+                            <?php else: ?><span class="money-add stat">+$<?= $r['number'] ?></span>
+                            <?php endif; ?>
+                            <span class="money-time small"><?= date("Y-m-d H:i:s", $r['time']); ?></span>
+                            <input type="number" class="is-hidden" id="uid" value="<?= $r['id'] ?>">
+                        </div>
+
+                    <?php endforeach; ?>
                 </div>
 
             </div>
@@ -59,26 +80,72 @@
 
             <div class="AddForm">
                 <h1 class="text-center">Add a record</h1>
-                <div class="input-group">
-                    <span class="input-group-label">Number</span>
-                    <input type="text" class="input-group-field" id="number" value="">
-                </div>
+                <div class="row collapse">
+                    <div class="small-12 columns">
+                        <div class="input-group">
+                            <span class="input-group-label">Number</span>
+                            <input type="number" class="input-group-field" id="number" value="">
+                        </div>
+                    </div>
 
-                <div class="switch large">
-                    <input class="switch-input" id="InOut" type="checkbox" name="InOut" checked>
-                    <label class="switch-paddle" for="InOut">
-                        <span class="switch-active">Output</span>
-                        <span class="switch-inactive">Input</span>
-                    </label>
-                </div>
+                    <div class="small-12 columns">
+                        <div class="switch large">
+                            <input class="switch-input" id="InOut" type="checkbox" name="InOut" checked>
+                            <label class="switch-paddle" for="InOut">
+                                <span class="switch-active">Output</span>
+                                <span class="switch-inactive">Input</span>
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="input-group">
-                    <span class="input-group-label">Details</span>
-                    <input type="text" class="input-group-field" id="pwd" value="">
-                </div>
-                <div class="input-group">
-                    <span class="input-group-label">Time</span>
-                    <input type="text" class="input-group-field" id="pwd" value="">
+                    <div class="small-12 columns">
+                        <div class="input-group">
+                            <span class="input-group-label">Title</span>
+                            <input type="text" class="input-group-field" id="title" value="">
+                        </div>
+                    </div>
+
+                    <div class="small-12 columns">
+                        <div class="input-group">
+                            <span class="input-group-label">Details</span>
+                            <input type="text" class="input-group-field" id="details" value="">
+                        </div>
+                    </div>
+
+                    <div class="small-12 medium-3 columns">
+                        <div class="input-group">
+                            <span class="input-group-label">Year</span>
+                            <input type="number" class="input-group-field" id="year" value="">
+                        </div>
+                    </div>
+
+                    <div class="small-12 medium-3 columns">
+                        <div class="input-group">
+                            <span class="input-group-label">Month</span>
+                            <input type="number" class="input-group-field" id="month" value="">
+                        </div>
+                    </div>
+
+                    <div class="small-12 medium-6 columns">
+                        <div class="input-group">
+                            <span class="input-group-label">Day</span>
+                            <input type="number" class="input-group-field" id="day" value="">
+                        </div>
+                    </div>
+
+                    <div class="small-12 medium-4 columns">
+                        <div class="input-group">
+                            <span class="input-group-label">Hour</span>
+                            <input type="number" class="input-group-field" id="hour" value="">
+                        </div>
+                    </div>
+
+                    <div class="small-12 medium-6 columns">
+                        <div class="input-group">
+                            <span class="input-group-label">Minute</span>
+                            <input type="number" class="input-group-field" id="minute" value="">
+                        </div>
+                    </div>
                 </div>
 
                 <button id='Add' type="button" class="button expanded">Add!</button>
@@ -93,7 +160,61 @@
             $('#addbutton').click(function () {
                 var AddElm = new Foundation.Reveal($('#AddItem'), {"data-animation-in": "fade-in"});
                 AddElm.open();
+
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var day = date.getDate();
+                var hour = date.getHours();
+                var minute = date.getMinutes();
+
+                $('#year').val(year);
+                $('#month').val(month);
+                $('#day').val(day);
+                $('#hour').val(hour);
+                $('#minute').val(minute);
                 //$('#AddItem').foundation('open');
+            });
+
+            $('#Add').click(function () {
+                var number = $('#number').val();
+                if ($('#InOut').is(':checked'))
+                //out
+                    var type = 1;
+                else var type = 2; //in
+
+                var details = $('#details').val();
+                var title = $('#title').val();
+                //var time = new Da)
+
+                var year = $('#year').val();
+                var month = $('#month').val();
+                var day = $('#day').val();
+                var hour = $('#hour').val();
+                var minute = $('#minute').val();
+                var date = new Date(year, month, day, hour, minute);
+
+                var timestamp = date.getTime() / 1000;
+
+                var postdata = {
+                    title: title,
+                    number: number,
+                    type: type,
+                    details: details,
+                    time: timestamp
+                };
+                $.ajax({
+                    url: 'http://eco.boot.pw/Index/AddRecord',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    data: JSON.stringify(postdata)
+                })
+            });
+
+            $('.money-details').click(function (event) {
+                console.log($(this).find('#uid').val());
+                //console.log($(event.target).children('#uid').val());
             });
         </script>
     </body>
