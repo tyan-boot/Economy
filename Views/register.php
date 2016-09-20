@@ -49,7 +49,7 @@
                 var Pwd = $('#pwd').val();
 
                 $.ajax({
-                    url: '<?$SiteUrl?>Register/Register',
+                    url: '<?=$SiteUrl?>Register/Register',
                     data: {
                         Username: Username,
                         Password: Pwd
