@@ -23,7 +23,13 @@ class Register extends Controller
 
     public function index()
     {
-        $vars = array( 'title' => 'Sign in', 'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/' );
+        global $starttime;
+
+        $endtime = explode(' ', microtime());
+        $RunTime = $endtime[0] + $endtime[1] - ($starttime[0] + $starttime[1]);
+        $RunTime = round($RunTime, 5);
+
+        $vars = array( 'title' => 'Sign in', 'RunTime' => $RunTime, 'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/' );
         $this->LoadView('register', $vars);
     }
 
@@ -33,12 +39,12 @@ class Register extends Controller
         $Pwd = $this->Input->Post('Password');
 
         $r = $this->User->Register($User, $Pwd);
-        if($r != false)
+        if ($r != false)
         {
             $msg['err'] = 0;
             $msg['msg'] = 'Register Success!';
             echo json_encode($msg);
-        }else
+        } else
         {
             $msg['err'] = 1;
             $msg['msg'] = 'Register Failed! User has exist!';

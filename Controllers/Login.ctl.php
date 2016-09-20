@@ -23,22 +23,28 @@ class Login extends Controller
 
     public function index()
     {
-        $vars = array( 'title' => 'Login in', 'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/' );
-        $this->LoadView('login',$vars);
+        global $starttime;
+
+        $endtime = explode(' ', microtime());
+        $RunTime = $endtime[0] + $endtime[1] - ($starttime[0] + $starttime[1]);
+        $RunTime = round($RunTime, 5);
+
+        $vars = array( 'title' => 'Login in', 'RunTime' => $RunTime, 'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/' );
+        $this->LoadView('login', $vars);
     }
 
     public function Login()
     {
         $User = $this->Input->Post('Username');
         $Pwd = $this->Input->Post('Password');
-        if($this->User->Login($User,$Pwd))
+        if ($this->User->Login($User, $Pwd))
         {
             //set cookie
-            setcookie('LOGIN',$this->User->GenCookie($User,$Pwd),time()+3600,'/');
+            setcookie('LOGIN', $this->User->GenCookie($User, $Pwd), time() + 3600, '/');
             $msg['err'] = 0;
             $msg['msg'] = 'Login Success';
             echo json_encode($msg);
-        }else
+        } else
         {
             $msg['err'] = 1;
             $msg['msg'] = 'Login Failed';
