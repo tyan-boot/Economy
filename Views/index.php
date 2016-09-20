@@ -220,7 +220,13 @@
                         if (data.err == 0) {
                             alert('Add Success');
                             $('#AddItem').foundation('close');
+                        }else
+                        {
+                            alert('Add failed: ');
                         }
+                    },
+                    error:function (XMLHttpRequest,TextStatus) {
+                        alert(XMLHttpRequest.status);
                     }
                 })
             });

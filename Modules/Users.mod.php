@@ -147,12 +147,12 @@ class Users
     public function AddRecord($userid, $type, $number, $title, $details, $time)
     {
         return $this->Db->insert('money', [
-            'type' => $type,
-            'number' => $number,
-            'time' => $time,
+            'type' => htmlspecialchars($type),
+            'number' => htmlspecialchars($number),
+            'time' => htmlspecialchars($time),
             'userid' => $userid,
-            'title' => $title,
-            'details' => $details
+            'title' => htmlspecialchars($title),
+            'details' => htmlspecialchars($details)
         ]);
     }
 
