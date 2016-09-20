@@ -13,3 +13,5 @@
 <script>
     $(document).foundation();
 </script>
+
+<p>Runtime is <?=$RunTime;?></p>

@@ -38,17 +38,18 @@ class Index extends Controller
         global $starttime;
 
         $endtime = explode(' ',microtime());
-        $thistime = $endtime[0]+$endtime[1]-($starttime[0]+$starttime[1]);
-        $thistime = round($thistime,5);
+        $RunTime = $endtime[0]+$endtime[1]-($starttime[0]+$starttime[1]);
+        $RunTime = round($RunTime,5);
 
         $vars = array(  'title' => 'Index',
                         'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/',
                         'Records'=>$data,
                         'Income'=>$Income,
                         'Outcome'=>$Outcome,
-                        'Balance'=>$Balance
+                        'Balance'=>$Balance,
+                        'RunTime'=>$RunTime
             );
-        echo 'Run time  '.$thistime;
+        //echo 'Run time  '.$thistime;
         $this->LoadView('index', $vars);
     }
 

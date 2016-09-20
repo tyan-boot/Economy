@@ -73,7 +73,7 @@
 
         <!-- add -->
 
-        <div class="reveal" id="AddItem" data-reveal data-animation-out="fade-out">
+        <div class="reveal" id="AddItem" data-reveal data-animation-out="fade-out" data-reset-on-close="true">
             <button class="close-button" data-close type="button">
                 <span>&times;</span>
             </button>
@@ -150,6 +150,8 @@
 
                 <button id='Add' type="button" class="button expanded">Add!</button>
 
+                <button id='TClose' type="button" class="button expanded">Close</button>
+
             </div>
         </div>
 
@@ -158,8 +160,10 @@
 
         <script>
             $('#addbutton').click(function () {
-                var AddElm = new Foundation.Reveal($('#AddItem'), {"data-animation-in": "fade-in"});
-                AddElm.open();
+                $('#AddItem').foundation('open');
+
+                $('#AddItem').find('#Add').html('Add');
+                $('#AddItem').find('h1.text-center').html('Add a record');
 
                 var date = new Date();
                 var year = date.getFullYear();
@@ -173,7 +177,10 @@
                 $('#day').val(day);
                 $('#hour').val(hour);
                 $('#minute').val(minute);
-                //$('#AddItem').foundation('open');
+                //bind function
+                $('#TClose').click(function () {
+                    $('#AddItem').foundation('close');
+                });
             });
 
             $('#Add').click(function () {
@@ -208,13 +215,26 @@
                     dataType: 'json',
                     contentType: 'application/json',
                     type: 'POST',
-                    data: JSON.stringify(postdata)
+                    data: JSON.stringify(postdata),
+                    success: function (data) {
+                        if (data.err == 0) {
+                            alert('Add Success');
+                            $('#AddItem').foundation('close');
+                        }
+                    }
                 })
             });
 
             $('.money-box').click(function (event) {
                 console.log($(this).find('#record-id').val());
-                //console.log($(event.target).children('#uid').val());
+                $('#AddItem').foundation('open');
+                var AddBox = $('#AddItem');
+                AddBox.find('#Add').html('Change');
+                AddBox.find('h1.text-center').html('Change a record');
+                alert('Sorry, change operation is not allow now');
+                $('#TClose').click(function () {
+                    $('#AddItem').foundation('close');
+                });
             });
         </script>
     </body>
