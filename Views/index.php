@@ -227,11 +227,11 @@
 
             $('.money-box').click(function (event) {
                 console.log($(this).find('#record-id').val());
-                $('#AddItem').foundation('open');
-                var AddBox = $('#AddItem');
-                AddBox.find('#Add').html('Change');
-                AddBox.find('h1.text-center').html('Change a record');
-                alert('Sorry, change operation is not allow now');
+                //$('#AddItem').foundation('open');
+                //var AddBox = $('#AddItem');
+                //AddBox.find('#Add').html('Change');
+                //AddBox.find('h1.text-center').html('Change a record');
+                alert('Sorry, change operation is not allowed now');
                 $('#TClose').click(function () {
                     $('#AddItem').foundation('close');
                 });
