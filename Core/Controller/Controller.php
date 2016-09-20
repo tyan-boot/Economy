@@ -45,4 +45,15 @@ class Controller
         }else
             header("Location: ".$Url);
     }
+
+    protected function GetSiteUrl()
+    {
+        $SiteUrl = '';
+        if(Config::$UseHttps)
+        {
+            $SiteUrl = 'https://'.Config::$SiteUrl.'/';
+        }else $SiteUrl = 'http://'.Config::$SiteUrl.'/';
+
+        return $SiteUrl;
+    }
 }

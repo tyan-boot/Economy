@@ -29,7 +29,7 @@ class Register extends Controller
         $RunTime = $endtime[0] + $endtime[1] - ($starttime[0] + $starttime[1]);
         $RunTime = round($RunTime, 5);
 
-        $vars = array( 'title' => 'Sign in', 'RunTime' => $RunTime, 'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/' );
+        $vars = array( 'title' => 'Sign in', 'RunTime' => $RunTime, 'ViewUrl' => $this->GetSiteUrl() . 'Views/', 'SiteUrl' => $this->GetSiteUrl() );
         $this->LoadView('register', $vars);
     }
 

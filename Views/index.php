@@ -211,7 +211,7 @@
                     time: timestamp
                 };
                 $.ajax({
-                    url: 'http://eco.boot.pw/Index/AddRecord',
+                    url: '<?=$SiteUrl?>Index/AddRecord',
                     dataType: 'json',
                     contentType: 'application/json',
                     type: 'POST',

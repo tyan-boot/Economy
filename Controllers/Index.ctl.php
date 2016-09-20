@@ -42,12 +42,13 @@ class Index extends Controller
         $RunTime = round($RunTime,5);
 
         $vars = array(  'title' => 'Index',
-                        'ViewUrl' => 'http://' . \Config\Config::$SiteUrl . '/Views/',
+                        'ViewUrl' => $this->GetSiteUrl().'Views/',
                         'Records'=>$data,
                         'Income'=>$Income,
                         'Outcome'=>$Outcome,
                         'Balance'=>$Balance,
-                        'RunTime'=>$RunTime
+                        'RunTime'=>$RunTime,
+                        'SiteUrl'=>$this->GetSiteUrl()
             );
         //echo 'Run time  '.$thistime;
         $this->LoadView('index', $vars);

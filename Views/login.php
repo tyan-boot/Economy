@@ -49,7 +49,7 @@
                 var Pwd = $('#pwd').val();
 
                 $.ajax({
-                    url: 'http://<?=\Config\Config::$SiteUrl?>/Login/Login',
+                    url: '<?=$SiteUrl?>Login/Login',
                     data: {
                         Username: Username,
                         Password: Pwd
