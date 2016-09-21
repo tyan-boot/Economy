@@ -33,42 +33,24 @@ class Index extends Controller
 
         $Income = $this->User->CountTotalIn($id);
         $Outcome = $this->User->CountTotalOut($id);
-        $Balance = $Income -$Outcome;
+        $Balance = $Income - $Outcome;
 
         global $starttime;
 
-        $endtime = explode(' ',microtime());
-        $RunTime = $endtime[0]+$endtime[1]-($starttime[0]+$starttime[1]);
-        $RunTime = round($RunTime,5);
+        $endtime = explode(' ', microtime());
+        $RunTime = $endtime[0] + $endtime[1] - ($starttime[0] + $starttime[1]);
+        $RunTime = round($RunTime, 5);
 
-        $vars = array(  'title' => 'Index',
-                        'ViewUrl' => $this->GetSiteUrl().'Views/',
-                        'Records'=>$data,
-                        'Income'=>$Income,
-                        'Outcome'=>$Outcome,
-                        'Balance'=>$Balance,
-                        'RunTime'=>$RunTime,
-                        'SiteUrl'=>$this->GetSiteUrl()
-            );
+        $vars = array( 'title' => 'Index',
+            'ViewUrl' => $this->GetSiteUrl() . 'Views/',
+            'Records' => $data,
+            'Income' => $Income,
+            'Outcome' => $Outcome,
+            'Balance' => $Balance,
+            'RunTime' => $RunTime,
+            'SiteUrl' => $this->GetSiteUrl()
+        );
         //echo 'Run time  '.$thistime;
         $this->LoadView('index', $vars);
-    }
-
-    public function AddRecord()
-    {
-        $data = json_decode($GLOBALS['HTTP_RAW_POST_DATA']);
-        if ($this->User->IsLogin())
-        {
-            $this->User->AddRecord($this->User->GetLoggedUserId(), $data->type, $data->number, $data->title, $data->details, $data->time);
-            $msg['err'] = 0;
-            $msg['msg'] = 'Success';
-            echo json_encode($msg);
-        } else
-        {
-            $msg['err'] = 1;
-            $msg['msg'] = 'No Login';
-            echo json_encode($msg);
-        }
-        //$data = $this->Input->Post('')
     }
 }

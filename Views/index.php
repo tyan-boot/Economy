@@ -24,23 +24,17 @@
                 <div class="money-overview column">
                     <div class="row">
                         <div class="small-4 columns money-in callout">
-                            <p>
-                                $<?= $Income ?>
-                            </p>
+                            <p id="Income"></p>
                             <p class="InOutText">Income</p>
                         </div>
 
                         <div class="small-4 columns money-balance callout">
-                            <p>
-                                $<?= $Balance ?>
-                            </p>
+                            <p id="Balance"></p>
                             <p class="InOutText">Balance</p>
                         </div>
 
                         <div class="small-4 columns money-out callout">
-                            <p>
-                                $<?= $Outcome ?>
-                            </p>
+                            <p id="Expenses"></p>
                             <p class="InOutText">Expenses</p>
                         </div>
                     </div>
@@ -48,22 +42,7 @@
                 </div>
 
                 <div class="money-details">
-                    <?php foreach ($Records as $key => $r): ?>
-
-                        <div class="callout money-box">
-                            <span class="money-title"><?= $r['title'] ?></span>
-                            <span class="money-content"><?= $r['details'] ?></span>
-                            <?php if ($r['type'] == 1): ?>
-                                <span class="money-subtract stat">-$<?= $r['number'] ?></span>
-                            <?php else: ?><span class="money-add stat">+$<?= $r['number'] ?></span>
-                            <?php endif; ?>
-                            <span class="money-time small"><?= date("Y-m-d H:i:s", $r['time']); ?></span>
-                            <input type="number" class="is-hidden" id="record-id" value="<?= $r['id'] ?>">
-                        </div>
-
-                    <?php endforeach; ?>
                 </div>
-
             </div>
 
             <div class="floatbutton">
@@ -149,7 +128,8 @@
                 </div>
 
                 <button id='Add' type="button" class="button expanded">Add!</button>
-
+                <button id='Edit' type="button" class="button expanded is-hidden">Edit!</button>
+                <button id='Del' type="button" class="button expanded is-hidden">Delete</button>
                 <button id='TClose' type="button" class="button expanded">Close</button>
 
             </div>
@@ -157,14 +137,56 @@
 
         <?php include 'footer.php'; ?>
 
+        <script>
+            var records;
+            var Income;
+            var Expenses;
+            $(document).ready(function () {
+                $.ajax({
+                    'url': '<?=$SiteUrl?>API/GetRecords',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#Income').text('$' + data.Income);
+                        var balance = data.Income - data.Expenses;
+                        $('#Balance').text('$' + balance);
+                        $('#Expenses').text('$' + data.Expenses);
+                        records = data.data;
+                        Income = data.Income;
+                        Expenses = data.Expenses;
+
+                        for (var key in records) {
+                            var record = records[key];
+                            var mdetails = $('.money-details');
+                            mdetails.append("<div class=\"callout money-box\"> </div>");
+                            var mbox = mdetails.children(":last");
+                            mbox.append("<span class=\"money-title\">" + record.title + "</span>");
+                            mbox.append("<span class=\"money-content\">" + record.details + "</span>");
+
+                            if (record.type == "1")
+                                mbox.append("<span class='money-subtract stat'>" + "-$" + record.number + "</span>");
+                            else mbox.append("<span class='money-add stat'>" + "+$" + record.number + "</span>");
+                            var date = new Date(record.time * 1000);
+                            mbox.append("<span class='money-time small'>" + date.toLocaleString() + "</span>");
+                            mbox.append("<input type='number' class='is-hidden' id='record-id' value='" + record.id + "'>");
+                            mbox.append("<input type='number' class='is-hidden' id='record-index-in-array' value='" + key + "'>");
+                        }
+                    }
+                });
+            });
+        </script>
 
         <script>
             $('#addbutton').click(function () {
-                $('#AddItem').foundation('open');
+                var AddItem = $('#AddItem');
 
-                $('#AddItem').find('#Add').html('Add');
-                $('#AddItem').find('h1.text-center').html('Add a record');
+                AddItem.foundation('open');
 
+                AddItem.find('#Add').removeClass('is-hidden');
+                AddItem.find('#Edit').addClass('is-hidden');
+                AddItem.find('h1.text-center').html('Add a record');
+                AddItem.find('#Del').addClass('is-hidden');
                 var date = new Date();
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
@@ -183,7 +205,7 @@
                 });
             });
 
-            $('#Add').click(function () {
+            $('body').on('click', '#Add', function () {
                 var number = $('#number').val();
                 if ($('#InOut').is(':checked'))
                 //out
@@ -199,7 +221,8 @@
                 var day = $('#day').val();
                 var hour = $('#hour').val();
                 var minute = $('#minute').val();
-                var date = new Date(year, month, day, hour, minute);
+                var ss = new Date().getSeconds();
+                var date = new Date(year, month, day, hour, minute,ss);
 
                 var timestamp = date.getTime() / 1000;
 
@@ -208,10 +231,10 @@
                     number: number,
                     type: type,
                     details: details,
-                    time: timestamp
+                    time: timestamp,
                 };
                 $.ajax({
-                    url: '<?=$SiteUrl?>Index/AddRecord',
+                    url: '<?=$SiteUrl?>API/AddRecord',
                     dataType: 'json',
                     contentType: 'application/json',
                     type: 'POST',
@@ -220,26 +243,118 @@
                         if (data.err == 0) {
                             alert('Add Success');
                             $('#AddItem').foundation('close');
-                        }else
-                        {
+                            InsertBox(data.id, title, number, type, details, timestamp);
+                        } else {
                             alert('Add failed: ');
                         }
                     },
-                    error:function (XMLHttpRequest,TextStatus) {
+                    error: function (XMLHttpRequest, TextStatus) {
                         alert(XMLHttpRequest.status);
                     }
                 })
             });
 
-            $('.money-box').click(function (event) {
-                console.log($(this).find('#record-id').val());
-                //$('#AddItem').foundation('open');
-                //var AddBox = $('#AddItem');
-                //AddBox.find('#Add').html('Change');
-                //AddBox.find('h1.text-center').html('Change a record');
-                alert('Sorry, change operation is not allowed now');
-                $('#TClose').click(function () {
-                    $('#AddItem').foundation('close');
+            $('body').on('click', '.money-box', function (event) {
+                //init info
+                var index = $(this).find('#record-index-in-array').val();
+                var thisBox = this;
+
+                var record = records[index];
+                var id = record['id'];
+
+                $('#number').val(record.number);
+                $('#details').val(record.details);
+                $('#title').val(record.title);
+                var date = new Date(record.time * 1000);
+
+                $('#year').val(date.getFullYear());
+                $('#month').val(date.getMonth() + 1);
+                $('#day').val(date.getDate());
+                $('#hour').val(date.getHours());
+                $('#minute').val(date.getMinutes());
+
+                //show
+                $('#AddItem').foundation('open');
+                var AddBox = $('#AddItem');
+                AddBox.find('#Add').addClass('is-hidden');
+                AddBox.find('#Edit').removeClass('is-hidden');
+                AddBox.find('#Del').removeClass('is-hidden');
+
+                AddBox.find('h1.text-center').html('Change a record');
+
+                $('#Edit').click(function () {
+                    var number = $('#number').val();
+                    if ($('#InOut').is(':checked'))
+                    //out
+                        var type = 1;
+                    else var type = 2; //in
+
+                    var details = $('#details').val();
+                    var title = $('#title').val();
+                    //var time = new Da)
+
+                    var year = $('#year').val();
+                    var month = $('#month').val();
+                    var day = $('#day').val();
+                    var hour = $('#hour').val();
+                    var minute = $('#minute').val();
+                    var date = new Date(year, month, day, hour, minute);
+
+                    var timestamp = date.getTime() / 1000;
+
+                    var postdata = {
+                        uid: id,
+                        title: title,
+                        number: number,
+                        type: type,
+                        details: details,
+                        time: timestamp
+                    };
+
+                    $.ajax({
+                        url: '<?=$SiteUrl?>API/EditRecord',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'POST',
+                        data: JSON.stringify(postdata),
+                        success: function (data) {
+                            if (data.err == 0) {
+                                alert('Edit Success');
+                                $('#AddItem').foundation('close');
+                                window.location.reload();
+                            } else {
+                                alert('Edit failed: ');
+                            }
+                        },
+                        error: function (XMLHttpRequest, TextStatus) {
+                            alert(XMLHttpRequest.status);
+                        }
+                    });
+
+                    $('#TClose').click(function () {
+                        $('#AddItem').foundation('close');
+                    });
+                });
+
+                $('#Del').click(function () {
+                    $.ajax({
+                        url: '<?=$SiteUrl?>API/DelRecord/' + id,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'GET',
+                        success: function (data) {
+                            if (data.err == 0) {
+                                alert('Del Success');
+                                $('#AddItem').foundation('close');
+                                window.location.reload();
+                            } else {
+                                alert('Del failed: ');
+                            }
+                        },
+                        error: function (XMLHttpRequest, TextStatus) {
+                            alert(XMLHttpRequest.status);
+                        }
+                    });
                 });
             });
         </script>

@@ -142,11 +142,12 @@ class Users
      * @param $number
      * @param $details
      * @param $time
-     * @return array|mixed
+     * @return $integer
      */
     public function AddRecord($userid, $type, $number, $title, $details, $time)
     {
-        return $this->Db->insert('money', [
+
+        $this->Db->insert('money', [
             'type' => htmlspecialchars($type),
             'number' => htmlspecialchars($number),
             'time' => htmlspecialchars($time),
@@ -154,6 +155,25 @@ class Users
             'title' => htmlspecialchars($title),
             'details' => htmlspecialchars($details)
         ]);
+        $r = $this->Db->get('money', [ 'id', 'userid' ], [ 'userid' => $userid, 'ORDER' => [ 'id' => 'DESC' ] ]);
+
+        return $r['id'];
+    }
+
+    public function EditRecord($uid, $type, $number, $title, $details, $time)
+    {
+        return $this->Db->update('money', [
+            'type' => htmlspecialchars($type),
+            'number' => htmlspecialchars($number),
+            'time' => htmlspecialchars($time),
+            'title' => htmlspecialchars($title),
+            'details' => htmlspecialchars($details)
+        ], [ 'id' => $uid ]);
+    }
+
+    public function DelRecord($id)
+    {
+        return $this->Db->delete('money', [ 'id' => $id ]);
     }
 
     public function QueryRecordByUserId($id)
@@ -169,34 +189,34 @@ class Users
     public function CountTotalOut($uid)
     {
         $r = $this->Db->select('money', [ 'userid', 'type', 'number' ], [ 'userid' => $uid ]);
-        if($r != null)
+        if ($r != null)
         {
             $TotalOut = 0;
 
-            foreach($r as $eachmoney)
+            foreach ($r as $eachmoney)
             {
-                if($eachmoney['type'] == 1)
+                if ($eachmoney['type'] == 1)
                     $TotalOut += $eachmoney['number'];
             }
 
             return $TotalOut;
-        }else return null;
+        } else return 0;
 
     }
 
     public function CountTotalIn($uid)
     {
         $r = $this->Db->select('money', [ 'userid', 'type', 'number' ], [ 'userid' => $uid ]);
-        if($r != null)
+        if ($r != null)
         {
             $TotalOut = 0;
 
-            foreach($r as $eachmoney)
+            foreach ($r as $eachmoney)
             {
-                if($eachmoney['type'] == 2)
+                if ($eachmoney['type'] == 2)
                     $TotalOut += $eachmoney['number'];
             }
             return $TotalOut;
-        }else return null;
+        } else return 0;
     }
 }

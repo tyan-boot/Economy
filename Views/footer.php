@@ -10,6 +10,7 @@
 <script src="<?=$ViewUrl?>js/vendor/jquery.js"></script>
 <script src="<?=$ViewUrl?>js/vendor/what-input.js"></script>
 <script src="<?=$ViewUrl?>js/vendor/foundation.min.js"></script>
+<script src="<?=$ViewUrl?>js/app.js"></script>
 <script>
     $(document).foundation();
 </script>
