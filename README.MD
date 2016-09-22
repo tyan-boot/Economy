@@ -9,7 +9,29 @@
 暂时只有Mysql
 
 ##SQL
-待添加...
+```sql
+
+--Money records
+CREATE TABLE IF NOT EXISTS `money` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `title` text,
+  `type` int(11) DEFAULT '0',
+  `number` decimal(30,2) DEFAULT '0.00',
+  `time` int(10) unsigned zerofill DEFAULT NULL,
+  `details` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--User
+CREATE TABLE IF NOT EXISTS `user` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `user` text,
+  `pwd` text,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+```
 
 #Demo
-暂无...
+http://booteco.carp.mopaasapp.com
