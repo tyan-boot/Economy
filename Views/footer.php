@@ -15,4 +15,4 @@
     $(document).foundation();
 </script>
 
-<p>Runtime is <?=$RunTime;?></p>
+<p class="Runtime">Total executed <?=$RunTime;?> s</p>
