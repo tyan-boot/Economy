@@ -15,127 +15,162 @@
     <?php include 'header.php'; ?>
 
     <body>
-        <div class="top-bar">
+        <!--<div class="top-bar">
             <div class="top-bar-title"><span class="bar-title">Economy</span></div>
-        </div>
-        <div class="row">
-            <div class="small-12 medium-10 medium-offset-1">
+        </div>-->
 
-                <div class="money-overview column">
+
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <!-- Title -->
+                    <span class="mdl-layout-title">Economy</span>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation. We hide it in small screens. -->
+                    <nav class="mdl-navigation mdl-layout--large-screen-only">
+                        <a class="mdl-navigation__link" id="SignOut" href="">Sign out</a>
+                    </nav>
+                </div>
+            </header>
+
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Menu</span>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                </nav>
+            </div>
+            <main class="mdl-layout__content">
+                <div class="page-content">
                     <div class="row">
-                        <div class="small-4 columns money-in callout">
-                            <p id="Income"></p>
-                            <p class="InOutText">Income</p>
+                        <div class="small-12 medium-10 medium-offset-1">
+
+                            <div class="money-overview column">
+                                <div class="row">
+                                    <div class="small-4 columns money-in callout">
+                                        <p id="Income"></p>
+                                        <p class="InOutText">Income</p>
+                                    </div>
+
+                                    <div class="small-4 columns money-balance callout">
+                                        <p id="Balance"></p>
+                                        <p class="InOutText">Balance</p>
+                                    </div>
+
+                                    <div class="small-4 columns money-out callout">
+                                        <p id="Expenses"></p>
+                                        <p class="InOutText">Expenses</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="money-details">
+                            </div>
                         </div>
 
-                        <div class="small-4 columns money-balance callout">
-                            <p id="Balance"></p>
-                            <p class="InOutText">Balance</p>
-                        </div>
-
-                        <div class="small-4 columns money-out callout">
-                            <p id="Expenses"></p>
-                            <p class="InOutText">Expenses</p>
+                        <div class="floatbutton">
+                            <button class="button large add-button" id="addbutton">+</button>
                         </div>
                     </div>
 
-                </div>
+                    <div class="reveal" id="AddItem" data-reveal data-animation-out="fade-out" data-reset-on-close="true">
+                        <button class="close-button" data-close type="button">
+                            <span>&times;</span>
+                        </button>
 
-                <div class="money-details">
-                </div>
-            </div>
+                        <div class="AddForm">
+                            <h1 class="text-center">Add a record</h1>
+                            <div class="row collapse">
+                                <div class="small-12 columns">
+                                    <div class="input-group">
+                                        <span class="input-group-label">Number</span>
+                                        <input type="number" class="input-group-field" id="number" value="">
+                                    </div>
+                                </div>
 
-            <div class="floatbutton">
-                <button class="button large add-button" id="addbutton">+</button>
-            </div>
+                                <div class="small-12 columns">
+                                    <div class="switch large">
+                                        <input class="switch-input" id="InOut" type="checkbox" name="InOut" checked>
+                                        <label class="switch-paddle" for="InOut">
+                                            <span class="switch-active">Output</span>
+                                            <span class="switch-inactive">Input</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="small-12 columns">
+                                    <div class="input-group">
+                                        <span class="input-group-label">Title</span>
+                                        <input type="text" class="input-group-field" id="title" value="">
+                                    </div>
+                                </div>
+
+                                <div class="small-12 columns">
+                                    <div class="input-group">
+                                        <span class="input-group-label">Details</span>
+                                        <input type="text" class="input-group-field" id="details" value="">
+                                    </div>
+                                </div>
+
+                                <div class="small-12 medium-3 columns">
+                                    <div class="input-group">
+                                        <span class="input-group-label">Year</span>
+                                        <input type="number" class="input-group-field" id="year" value="">
+                                    </div>
+                                </div>
+
+                                <div class="small-12 medium-3 columns">
+                                    <div class="input-group">
+                                        <span class="input-group-label">Month</span>
+                                        <input type="number" class="input-group-field" id="month" value="">
+                                    </div>
+                                </div>
+
+                                <div class="small-12 medium-6 columns">
+                                    <div class="input-group">
+                                        <span class="input-group-label">Day</span>
+                                        <input type="number" class="input-group-field" id="day" value="">
+                                    </div>
+                                </div>
+
+                                <div class="small-12 medium-4 columns">
+                                    <div class="input-group">
+                                        <span class="input-group-label">Hour</span>
+                                        <input type="number" class="input-group-field" id="hour" value="">
+                                    </div>
+                                </div>
+
+                                <div class="small-12 medium-6 columns">
+                                    <div class="input-group">
+                                        <span class="input-group-label">Minute</span>
+                                        <input type="number" class="input-group-field" id="minute" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id='Add' type="button" class="button expanded">Add!</button>
+                            <button id='Edit' type="button" class="button expanded is-hidden">Edit!</button>
+                            <button id='Del' type="button" class="button expanded is-hidden">Delete</button>
+                            <button id='TClose' type="button" class="button expanded">Close</button>
+
+                        </div>
+                    </div>
+
+                    <?php include 'footer.php'; ?>
+
+                </div>
+            </main>
         </div>
+
 
         <!-- add -->
 
-        <div class="reveal" id="AddItem" data-reveal data-animation-out="fade-out" data-reset-on-close="true">
-            <button class="close-button" data-close type="button">
-                <span>&times;</span>
-            </button>
 
-            <div class="AddForm">
-                <h1 class="text-center">Add a record</h1>
-                <div class="row collapse">
-                    <div class="small-12 columns">
-                        <div class="input-group">
-                            <span class="input-group-label">Number</span>
-                            <input type="number" class="input-group-field" id="number" value="">
-                        </div>
-                    </div>
 
-                    <div class="small-12 columns">
-                        <div class="switch large">
-                            <input class="switch-input" id="InOut" type="checkbox" name="InOut" checked>
-                            <label class="switch-paddle" for="InOut">
-                                <span class="switch-active">Output</span>
-                                <span class="switch-inactive">Input</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="small-12 columns">
-                        <div class="input-group">
-                            <span class="input-group-label">Title</span>
-                            <input type="text" class="input-group-field" id="title" value="">
-                        </div>
-                    </div>
-
-                    <div class="small-12 columns">
-                        <div class="input-group">
-                            <span class="input-group-label">Details</span>
-                            <input type="text" class="input-group-field" id="details" value="">
-                        </div>
-                    </div>
-
-                    <div class="small-12 medium-3 columns">
-                        <div class="input-group">
-                            <span class="input-group-label">Year</span>
-                            <input type="number" class="input-group-field" id="year" value="">
-                        </div>
-                    </div>
-
-                    <div class="small-12 medium-3 columns">
-                        <div class="input-group">
-                            <span class="input-group-label">Month</span>
-                            <input type="number" class="input-group-field" id="month" value="">
-                        </div>
-                    </div>
-
-                    <div class="small-12 medium-6 columns">
-                        <div class="input-group">
-                            <span class="input-group-label">Day</span>
-                            <input type="number" class="input-group-field" id="day" value="">
-                        </div>
-                    </div>
-
-                    <div class="small-12 medium-4 columns">
-                        <div class="input-group">
-                            <span class="input-group-label">Hour</span>
-                            <input type="number" class="input-group-field" id="hour" value="">
-                        </div>
-                    </div>
-
-                    <div class="small-12 medium-6 columns">
-                        <div class="input-group">
-                            <span class="input-group-label">Minute</span>
-                            <input type="number" class="input-group-field" id="minute" value="">
-                        </div>
-                    </div>
-                </div>
-
-                <button id='Add' type="button" class="button expanded">Add!</button>
-                <button id='Edit' type="button" class="button expanded is-hidden">Edit!</button>
-                <button id='Del' type="button" class="button expanded is-hidden">Delete</button>
-                <button id='TClose' type="button" class="button expanded">Close</button>
-
-            </div>
-        </div>
-
-        <?php include 'footer.php'; ?>
 
         <script>
             var records;
@@ -222,7 +257,7 @@
                 var hour = $('#hour').val();
                 var minute = $('#minute').val();
                 var ss = new Date().getSeconds();
-                var date = new Date(year, month, day, hour, minute,ss);
+                var date = new Date(year, month, day, hour, minute, ss);
 
                 var timestamp = date.getTime() / 1000;
 
@@ -356,6 +391,18 @@
                         }
                     });
                 });
+            });
+
+            $('#SignOut').click(function(){
+
+                function removeItem(sKey, sPath, sDomain) {
+                    document.cookie = encodeURIComponent(sKey) +
+                        "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" +
+                        (sDomain ? "; domain=" + sDomain : "") +
+                        (sPath ? "; path=" + sPath : "");
+                }
+
+                removeItem('LOGIN');
             });
         </script>
     </body>

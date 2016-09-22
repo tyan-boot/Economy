@@ -17,4 +17,8 @@
     please convert it manually if you wanna test this unfinished project :)
     -->
     <link rel="stylesheet" href="<?=$ViewUrl?>css/app.scss" />
+
+    <link rel="stylesheet" href="<?=$ViewUrl?>css/material.min.css">
+    <script src="<?=$ViewUrl?>js/material.min.js"></script>
+    <link rel="stylesheet" href="<?=$ViewUrl?>css/MeterialIcons.css">
 </head>
