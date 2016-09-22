@@ -13,5 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?=$title?></title>
     <link rel="stylesheet" href="<?=$ViewUrl?>css/foundation.css" />
-    <link rel="stylesheet" href="<?=$ViewUrl?>css/app.css" />
+    <!--Warning ! this scss file is automatically converted to css by apache cgi-bin using gem scss.
+    please convert it manually if you wanna test this unfinished project :)
+    -->
+    <link rel="stylesheet" href="<?=$ViewUrl?>css/app.scss" />
 </head>

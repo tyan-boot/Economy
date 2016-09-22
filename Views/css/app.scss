@@ -1,0 +1,178 @@
+body {
+  background-color: #f1f1f1;
+  font-family: "Microsoft YaHei UI", serif;
+}
+
+.login-box {
+  background-color: #fefefe;
+  margin-top: 15%;
+  padding: 1.0em 1.5em 0.5em;
+  box-shadow: 0.5em 0.5em 1.5em #444;
+
+  .row {
+    .columns {
+      .login-text {
+        margin-bottom: 0.8em;
+      }
+    }
+  }
+}
+
+.top-bar {
+  background-color: #66ccff;
+  height: 4em !important;
+}
+
+.bar-title {
+  font-weight: 700 !important;
+  font-size: 1.6em;
+}
+
+.overview-box {
+  margin-top: 1.5em;
+  background-color: #fcfcfc;
+  border-radius: 0.2em;
+  box-shadow: 0em 0.4em 0.8em #888;
+}
+
+.money-add {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  color: #c60f13;
+  font-weight: bold;
+}
+
+.money-subtract {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  color: #5da423;
+  font-weight: bold;
+}
+
+.money-box {
+  height: 7em;
+  box-shadow: 0em 0.5em 2em #aaa;
+}
+
+.money-overview {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+
+  .row {
+    .money-in {
+      p {
+        font-size: 150% !important;
+        color: #c60f13;
+        text-align: center;
+      }
+    }
+
+    .money-out {
+      p {
+
+        font-size: 150% !important;
+        color: #5da423;
+        text-align: center;
+      }
+    }
+
+    .money-balance {
+      p {
+        font-size: 150% !important;
+        color: #5da423;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.money-in {
+  height: 7em;
+  box-shadow: 0em 0.5em 2em #aaa;
+}
+
+.money-out {
+  height: 7em;
+  box-shadow: 0em 0.5em 2em #aaa;
+}
+
+.money-balance {
+  height: 7em;
+  box-shadow: 0em 0.5em 2em #aaa;
+}
+
+.money-title {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 150% !important;
+  font-weight: bold;
+}
+
+.money-content {
+  position: absolute;
+  top: 4rem;
+  left: 1.5rem;
+  color: #888;
+}
+
+.money-time {
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  font-weight: 600;
+  color: #757575;
+}
+
+.money-details {
+  padding-top: 1.5rem !important;
+}
+
+.floatbutton {
+  position: fixed;
+  right: 3rem;
+  bottom: 3rem;
+}
+
+.add-button {
+  background-color: coral !important;
+  border-radius: 100%;
+  box-shadow: 0.5rem 0.5rem 2rem #aaa;
+}
+
+.add-button:hover {
+  background-color: chocolate !important;
+}
+
+#AddItem {
+  .AddForm {
+    padding-top: 1.0rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    .row {
+      .columns {
+        .switch {
+          .switch-paddle {
+            width: 8rem !important;
+          }
+
+          input:checked ~ .switch-paddle::after {
+            left: 5.75rem !important;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.InOutText {
+  margin-top: -0.5em;
+}
